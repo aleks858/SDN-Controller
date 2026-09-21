@@ -1,0 +1,107 @@
+!
+version 16.6.4
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname R50
+!
+!
+!
+enable secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+!
+!
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+username cisco privilege 15 password
+!
+!
+!
+!
+!
+!
+!
+!
+ip ssh version 2
+ip domain-name network.net
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 50.50.50.50 255.255.255.255
+!
+interface GigabitEthernet0/0/0
+ description Link to R30
+ ip address 192.30.30.87 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0/1
+ description Link to R40
+ ip address 10.128.20.97 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0/2
+ description Link to R60
+ ip address 10.99.20.100 255.255.255.0
+!
+interface GigabitEthernet0/1/0
+!
+interface GigabitEthernet0/1/1
+!
+interface GigabitEthernet0/1/2
+!
+interface GigabitEthernet0/1/3
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 202
+ router-id 50.50.50.50
+ log-adjacency-changes
+ auto-cost reference-bandwidth 1000
+ network 50.50.50.50 0.0.0.0 area 1
+ network 10.128.20.0 0.0.0.255 area 1
+ network 10.99.20.0 0.0.0.255 area 1
+ network 192.30.30.0 0.0.0.255 area 1
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+snmp-server community public RO
+!
+line con 0
+ login local
+!
+line aux 0
+!
+line vty 0 4
+ login local
+ transport input ssh
+ privilege level 15
+!
+!
+!
+end
+

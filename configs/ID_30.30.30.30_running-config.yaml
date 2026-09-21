@@ -1,0 +1,112 @@
+!
+version 15.4
+no service timestamps log datetime msec
+no service timestamps debug datetime msec
+no service password-encryption
+!
+hostname R30
+!
+!
+!
+enable secret 5 $1$mERr$hx5rVt7rPNoS4wqbXKX7m0
+!
+!
+!
+!
+!
+!
+no ip cef
+no ipv6 cef
+!
+!
+!
+username cisco privilege 15 password
+!
+!
+!
+!
+!
+!
+!
+!
+ip ssh version 2
+ip domain-name network.net
+ip name-server 8.8.8.8
+!
+!
+spanning-tree mode pvst
+!
+!
+!
+!
+!
+!
+interface Loopback0
+ ip address 30.30.30.30 255.255.255.255
+!
+interface GigabitEthernet0/0/0
+ description Link to R40
+ ip address 184.12.20.100 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0/1
+ description Link to R50
+ ip address 10.128.20.98 255.255.255.0
+ duplex auto
+ speed auto
+!
+interface GigabitEthernet0/0/2
+ description Link to V10
+ ip address 192.20.20.97 255.255.255.0
+!
+interface GigabitEthernet0/1/0
+ switchport mode access
+!
+interface GigabitEthernet0/1/1
+ switchport mode access
+!
+interface GigabitEthernet0/1/2
+ switchport mode access
+!
+interface GigabitEthernet0/1/3
+ switchport mode access
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+router ospf 202
+ router-id 30.30.30.30
+ log-adjacency-changes
+ auto-cost reference-bandwidth 1000
+ network 184.12.20.0 0.0.0.255 area 1
+ network 10.128.20.0 0.0.0.255 area 1
+ network 192.20.20.0 0.0.0.255 area 1
+ network 30.30.30.30 0.0.0.0 area 1
+!
+ip classless
+!
+ip flow-export version 9
+!
+!
+!
+!
+!
+!
+snmp-server community public RO
+!
+line con 0
+ login local
+!
+line aux 0
+!
+line vty 0 4
+ login local
+ transport input ssh
+ privilege level 15
+!
+!
+!
+end
+
