@@ -52,7 +52,7 @@ configs/ID_60.60.60.60_running-config.yaml
 
 Убедиться, что все OSPF-соседства в состоянии FULL:
 
-![OSPF-соседства](images/ospf neighbors.png)
+![OSPF-соседства](images/ospf-neighbors.png)
 
 Проверить, что SDN видит все 6 маршрутизаторов:
 
